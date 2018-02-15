@@ -1,6 +1,8 @@
 ##### FOREST PLOT #####
 
 
+
+
 #' Function to create forest plot
 #' 
 #' A function to call package \code{forestplot} from R library and produce

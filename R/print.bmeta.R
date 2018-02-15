@@ -1,6 +1,8 @@
 ########################################
 
 
+
+
 #' Print method for \code{bmeta} objects
 #' 
 #' Function to print output from function \code{bmeta}

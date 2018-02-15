@@ -1,6 +1,8 @@
 ##### TRACEPLOT #####
 
 
+
+
 #' Traceplot to assess convergence
 #' 
 #' Function to display a plot of iteration vs. sample values for each variable

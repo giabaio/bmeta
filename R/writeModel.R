@@ -1,6 +1,8 @@
 #### WRITE MODEL #####
 
 
+
+
 #' A function to write a text file encoding the modelling assumptions
 #' 
 #' The \code{writeModel} function helps to select the proper model to be

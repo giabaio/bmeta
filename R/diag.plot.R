@@ -1,6 +1,8 @@
 ##### DIAG PLOT #####
 
 
+
+
 #' Diagnostic plot to examine model fit
 #' 
 #' Function to produce plot based on different diagnostic statistics

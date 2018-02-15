@@ -13,3 +13,4 @@ URL: http://www.statistica.it/gianluca/bmeta,
 NeedsCompilation: no
 Packaged: 2016-05-05 07:52:40 UTC; gianluca
 Built: R 3.3.0; ; 2016-05-05 07:54:40 UTC; unix
+RoxygenNote: 6.0.1

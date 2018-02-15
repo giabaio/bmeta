@@ -19,8 +19,8 @@ fit and performance.
 \tabular{ll}{
 Package: \tab bmeta\cr
 Type: \tab Package\cr
-Version: \tab 0.1.3\cr
-Date: \tab 2016-05-05\cr
+Version: \tab 0.1.4\cr
+Date: \tab 2018-02-15\cr
 License: \tab GPL2 \cr
 LazyLoad: \tab yes\cr
 }

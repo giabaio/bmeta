@@ -1,6 +1,8 @@
 ###### Funnel Plot #####
 
 
+
+
 #' Funnel plot to examine publication bias
 #' 
 #' Function to examine publication bias. For both fixed- and random-effects
