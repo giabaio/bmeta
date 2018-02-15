@@ -98,6 +98,7 @@
 #' 10000)
 #' @param n.burnin number of burn-in to be used in the simulation (default is
 #' 5000)
+#' @param n.samples number of total iterations to be saved
 #' @param n.chains number of Markov chains to be used in the simulation
 #' (default is 2)
 #' @param model.file file containing the appropriate model selected by user
@@ -139,7 +140,7 @@
 #' 
 #' 
 #' ### Read and format the data (continuous)
-#' data = read.csv(url("http://www.statistica.it/gianluca/bmeta/Data-ctns.csv"))                           
+#' data = read.csv(url("http://www.statistica.it/gianluca/bmeta/Data-ctns.csv"))
 #' 
 #' ### List data for continuous outcome for studies reporting two arms separately
 #' ### (for meta-analysis)
@@ -160,7 +161,7 @@
 #' 
 #' 
 #' ### Read and format the data (count)
-#' data = read.csv(url("http://www.statistica.it/gianluca/bmeta/Data-count.csv"))  
+#' data = read.csv(url("http://www.statistica.it/gianluca/bmeta/Data-count.csv"))
 #' 
 #' ### List data for count outcome (for meta-analysis)
 #' data.list <- list(y0=data$y0,y1=data$y1,p0=data$p0,p1=data$p1)

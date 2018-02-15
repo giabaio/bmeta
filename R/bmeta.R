@@ -1,4 +1,4 @@
-#' Bayesian Meta Analysis/Meta-regression
+#' bmeta -- Bayesian Meta Analysis/Meta-regression
 #' 
 #' Function to fit the Bayesian fixed- and random-effects meta-analytic models
 #' with or without moderators. Models are designed to include non-informative
@@ -8,25 +8,46 @@
 #' 
 #' The function can be used to evaluate odds ratios (or log odds ratios), mean
 #' difference and incidence rate ratios (or log incidence rate ratios). Users
-#' need to specify a list of data to be used in the function. For binary data,
-#' events out of case and control arm and sample size of case and control arm
-#' need to be listed. For continuous data, mean and standard errors of case and
-#' control arm need to be listed if information is available. However, if only
-#' mean difference and variance can be retrieved from each study, users need to
-#' list mean difference and precision (inverse of variance). Notice that
-#' information of all the studies need to be provided in the same format for
-#' the function to work properly. For example, the function cannot work if some
-#' of the studies provide mean and standard errors of the two arms while the
-#' rest studies provide mean difference and variance. For count data, total
-#' number of events in the follow-up period of case and control arm, total
-#' follow-up person-time in case and control arm should be listed.
+#' need to specify a list of data to be used in the function.
 #' 
-#' If additional impacts of a variable or more than one variable are observed
-#' (when meta-regression is expected to be used), users need to provide a
-#' matrix with each column either containing a dummy variable or a continuous
-#' variable. In case that categorical variables (i.e. ethnicity, age band) are
-#' observed and included, users need to first choose a 'baseline' category as
-#' reference and then create dummies for each of the rest categories.
+#' For binary data, the meta-analysis models require users to provide a list of
+#' values for events out of case arm (y1) and control arm (y0) and the sample
+#' size of case arm (n1) and control arm (n0). If there are additional
+#' covariates (when meta-regression should be applied), a matrix 'X' needs to
+#' be used with each column either containing a dummy variable (either '0' or
+#' '1') or a continuous variable. For binary and continuous covariates, the
+#' matrix 'X' can be specified by the command X=data$covariate or
+#' X=cbind(data$covariate1, data$covariate2). For categorical variables, users
+#' need to firstly choose a 'baseline' category as reference and then create
+#' dummies for each of the rest categories. For example, if there is a
+#' covariate 'ethnicity' with 3 categories ---White, Black and Asian, and
+#' suppose we use Asian as our baseline reference group, then dummies for the
+#' rest 2 categories, White and Black, should be created, with 1 column
+#' containing either '0' or '1' indicating whether a study use White population
+#' or not and another one column in exactly the same format indicating whether
+#' as study use Black population or not. For the next step, the matrix 'X'
+#' should be specified by combining information from these two columns, i.e.
+#' X=cbind(data$White,data$Black).
+#' 
+#' For continuous data, mean (y1,y0) and standard errors (se1,se0) of case and
+#' control arm need to be listed, respectively, if information is available.
+#' However, if only mean difference and variance can be retrieved from each
+#' study, users need to list mean difference (y) and precision
+#' (prec)---defining as the inverse of variance. Notice that information of all
+#' the studies need to be provided in the same format for the function to work
+#' properly. For example, the function cannot work if some of the studies
+#' provide mean and standard errors of the two arms while the rest studies
+#' provide mean difference and variance. The meta-regression models require
+#' exactly the same format of covariates input as illustrated above for the
+#' binary data.
+#' 
+#' For count data, total number of events in the follow-up period of case arm
+#' (y1) and control arm (y0), total follow-up person-time in case arm (p1) and
+#' control arm (p0) should be listed. The meta-regression models require
+#' exactly the same format of input as illustrated above for the binary data.
+#' 
+#' Notice that for all meta-regression models, moderator effects can only be
+#' incorporated into the model through the matrix 'X'.
 #' 
 #' Model selection
 #' 
@@ -41,80 +62,80 @@
 #' For binary data, normal and Student t-distribution priors for summary
 #' estimates (on log scale) can be selected and it is indicated that Student
 #' t-distribution has heavier tails and is therefore more robust to outliers.
-#' The argument 'model' here includes 4 options --- \code{std.norm},
-#' \code{std.dt}, \code{reg.norm}, \code{reg.dt}.
+#' The argument 'model' here includes 4 options
+#' ---"std.norm","std.dt","reg.norm","reg.dt".
 #' 
 #' For continuous data, rather than specifying prior, users need to select
 #' whether all studies included report mean and standard errors of two arms
 #' separately or only mean difference and variance as discussed above in the
 #' 'Specifying the data' section. The argument 'model' here includes 4
-#' options--- \code{std.ta}, \code{std.mv}, \code{reg.ta}, \code{reg.mv}
-#' ('model' ending with 'ta' represents 'two arms' and ending with 'mv'
-#' represents 'mean and variance').
+#' options---"std.ta","std.mv","reg.ta","reg.mv"('model' ending with 'ta'
+#' represents 'two arms' and ending with 'mv' represents 'mean and variance').
 #' 
 #' For count data, uniform and half-Cauchy distribution priors for the
 #' variability of summary estimates (on log scale) can be selected. It is
 #' suggested that half-Cauchy distribution has heavier tails and allows for
 #' outliers and accommodates small variances closing to zero. It should be
 #' noticed that there is no need to specify priors for fixed-effects models for
-#' count data. The argument 'model' here includes 6 options --- \code{std},
-#' \code{std.unif}, \code{std.hc}, \code{reg}, \code{reg.unif}, \code{reg.hc}.
+#' count data. The argument 'model' here includes 6 options
+#' ---"std","std.unif","std.hc","reg","reg.unif","reg.hc". The meta-analysis
+#' models require users to provide a list of values for total number of events
+#' in case arm (y1) and control arm (y0) in the follow-up period and the total
+#' follow-up person-time in case arm (p1) and control arm (p0).
 #' 
-#' In conjunction with the argument 'type'--- \code{fix} or \code{ran}, users
-#' can select the specific model wanted for a certain type of data.
+#' In conjunction with the argument 'type'---"fix" or "ran", users can select
+#' the specific model wanted for a certain type of data.
 #' 
-#' @aliases bmeta bmeta.default
 #' @param data a data list containing information on observed data (including
 #' moderators). See 'details'.
 #' @param outcome type of outcome that needs to be specified. For binary,
-#' continuous and count data, \code{bin}, \code{ctns} and \code{count} need to
-#' be specified, respectively.
+#' continuous and count data, "bin","ctns" and "count" need to be specified,
+#' respectively.
 #' @param model type of model that needs to be specified. See 'details'.
-#' @param type model type---either fixed-effects (\code{fix}) or random-effects
-#' model(\code{ran}) needs to be specified.
+#' @param type model type---either fixed-effects("fix") or random-effects
+#' model("ran") needs to be specified.
 #' @param n.iter number of iterations to be used in the simulation (default is
 #' 10000)
 #' @param n.burnin number of burn-in to be used in the simulation (default is
 #' 5000)
-#' @param n.samples The total number of MCMC simulations saved (including
-#' thinning). Default at 1000
+#' @param n.samples number of total iterations to be saved
 #' @param n.chains number of Markov chains to be used in the simulation
 #' (default is 2)
-#' @param model.file Name of the text file to which the model is saved
+#' @param model.file file containing the appropriate model selected by user
 #' @param ...  additional (optional) arguments
-#' @return \item{mod}{A \code{rjags} object with the results of the model}
+#' @return \item{mod}{A rjags object with the results of the model}
 #' \item{params}{a list of monitored parameters to be saved} \item{data}{the
-#' original dataset} \item{inits}{a list with \code{n.chains} elements, with
-#' each element itself being a list of starting values for the model or a
-#' function generating initial values} \item{outcome}{selected type of outcome
-#' (i.e. bin/ctns/count)} \item{type}{selected type of model (either
+#' original dataset} \item{inits}{a list with n.chains elements, with each
+#' element itself being a list of starting values for the model or a function
+#' generating initial values} \item{outcome}{selected type of outcome (i.e.
+#' bin/ctns/count)} \item{type}{selected type of model (either
 #' fixed-/random-effects)} \item{model}{selected model with specific priors}
 #' \item{mod0}{independent model without pooling effects}
+#' @note %% ~~further notes~~
 #' @author Tao Ding Gianluca Baio
+#' @seealso %% ~~objects to See Also as \code{\link{help}}, ~~~
 #' @references Baio, G.(2012) Bayesian methods in health economics. Chapman
-#' Hall, CRC.
-#' 
-#' Welton, N.J., Sutton, A.J., Cooper, N., Abrams, K.R. & Ades, A.E. (2012)
-#' Evidence synthesis for decision making in healthcare. Chichester, UK: John
-#' Wiley & Sons, Ltd.
-#' @keywords Bayesian meta-analysis
+#' Hall, CRC. Welton, N.J., Sutton, A.J., Cooper, N., Abrams, K.R. & Ades, A.E.
+#' (2012) Evidence synthesis for decision making in healthcare. Chichester, UK:
+#' John Wiley & Sons, Ltd.
+#' @keywords ~kwd1 ~kwd2
 #' @examples
 #' 
 #' ### Read and format the data (binary)
 #' data = read.csv(url("http://www.statistica.it/gianluca/bmeta/Data-bin.csv"))
 #' 
 #' ### List data for binary outcome (for meta-analysis)
-#' d1 <- data.list <- list(y0=data$y0,y1=data$y1,n0=data$n0,n1=data$n1) 
+#' data.list <- list(y0=data$y0,y1=data$y1,n0=data$n0,n1=data$n1) 
 #' 
 #' ### List data for binary outcome when there is a covariate (for meta-regression)
-#' d1 <- data.list <- list(y0=data$y0,y1=data$y1,n0=data$n0,n1=data$n1,X=cbind(data$X0)) 
+#' data.list <- list(y0=data$y0,y1=data$y1,n0=data$n0,n1=data$n1,X=cbind(data$X0)) 
 #' 
 #' ### Select fixed-effects meta-analysis with normal prior for binary data 
-#' m1 <- bmeta(d1, outcome="bin", model="std.norm", type="fix",n.iter=100)
+#' bmeta(data.list, outcome="bin", model="std.norm", type="fix")
 #' 
 #' ### Select random-effects meta-regression with t-distribution prior for binary
 #' ### data
-#' m2 <- bmeta(data.list, outcome="bin", model="reg.dt", type="ran",n.iter=100)
+#' bmeta(data.list, outcome="bin", model="reg.dt", type="ran")
 #' 
 #' 
 #' 
@@ -123,39 +144,39 @@
 #' 
 #' ### List data for continuous outcome for studies reporting two arms separately
 #' ### (for meta-analysis)
-#' d1 <- data.list <- list(y0=data$y0,y1=data$y1,se0=data$se0,se1=data$se1) 
+#' data.list <- list(y0=data$y0,y1=data$y1,se0=data$se0,se1=data$se1) 
 #' 
 #' ### List data for continuous outcome for studies reporting mean difference and 
 #' ### variance with a covariate (for meta-regression)
-#' d2 <- data.list2 <- list(y=data$y,prec=data$prec,X=cbind(data$X0))
+#' data.list <- list(y=data$y,prec=data$prec,X=cbind(data$X0))
 #' 
 #' ### Select fixed-effects meta-analysis with studies reporting information of 
 #' ### both arm for continuous data 
-#' m1 <- bmeta(data.list, outcome="ctns", model="std.ta", type="fix",n.iter=100)
+#' bmeta(data.list, outcome="ctns", model="std.ta", type="fix")
 #' 
 #' ### Select random-effects meta-regression with studies reporting mean difference and 
 #' ### variance only for continuous data
-#' m2 <- bmeta(data.list2, outcome="ctns", model="reg.mv", type="ran",n.iter=100)
+#' bmeta(data.list, outcome="ctns", model="reg.mv", type="ran")
 #' 
 #' 
 #' 
 #' ### Read and format the data (count)
-#' data = read.csv(url("http://www.statistica.it/gianluca/bmeta/Data-count.csv"))  
+#' data = read.csv(url("http://www.statistica.it/gianluca/bmeta/Data-count.csv"))
 #' 
 #' ### List data for count outcome (for meta-analysis)
-#' d1 <- data.list <- list(y0=data$y0,y1=data$y1,p0=data[,6],p1=data[,10])
+#' data.list <- list(y0=data$y0,y1=data$y1,p0=data$p0,p1=data$p1)
 #' 
 #' ### List data for count outcome when there is a covariate (for meta-regression)
-#' d2 <- data.list <- list(y0=data$y0,y1=data$y1,p0=data[,6],p1=data[,10],X=cbind(data$X0)) 
+#' data.list <- list(y0=data$y0,y1=data$y1,p0=data$p0,p1=data$p1,X=cbind(data$X0)) 
 #' 
 #' ### Select fixed-effects meta-analysis for count data
-#' m1 <- bmeta(d1, outcome="count", model="std", type="fix",n.iter=100)
+#' bmeta(data.list, outcome="count", model="std", type="fix")
 #' 
 #' ### Select random-effects meta-analysis with half-Cauchy prior for count data
-#' m2 <- bmeta(d1, outcome="count", model="std.hc", type="ran",n.iter=100)
+#' bmeta(data.list, outcome="count", model="std.hc", type="ran")
 #' 
 #' ### Select random-effects meta-regression with uniform prior for count data
-#' m3 <- bmeta(d2, outcome="count", model="reg.unif", type="ran",n.iter=100)
+#' bmeta(data.list, outcome="count", model="reg.unif", type="ran")
 #' 
 #' 
 bmeta<- function(data,outcome=c("bin","ctns","count"),model=c("std.norm","std.dt","reg.norm","reg.dt",

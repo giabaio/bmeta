@@ -11,6 +11,5 @@ License: GPL (>=2)
 URL: http://www.statistica.it/gianluca/bmeta,
         http://www.statistica.it/gianluca
 NeedsCompilation: no
-Packaged: 2016-05-05 07:52:40 UTC; gianluca
-Built: R 3.3.0; ; 2016-05-05 07:54:40 UTC; unix
+Packaged: 2018-02-15 07:52:40 UTC; gianluca
 RoxygenNote: 6.0.1

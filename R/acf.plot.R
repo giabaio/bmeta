@@ -1,8 +1,3 @@
-##### ACF PLOT #### 
-
-
-
-
 #' Autocorrelation function plot
 #' 
 #' Function to create autocorrelation function plot to assess convergence

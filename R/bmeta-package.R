@@ -1,5 +1,3 @@
-
-
 #' bmeta: A Bayesian Meta-Analysis Package for R
 #' 
 #' The bmeta package provides a collection of functions for conducting
