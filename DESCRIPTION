@@ -1,0 +1,15 @@
+Package: bmeta
+Type: Package
+Title: Bayesian Meta-Analysis and Meta-Regression
+Version: 0.1.4
+Date: 2018-02-15
+Author: Tao Ding, Gianluca Baio
+Maintainer: Gianluca Baio <gianluca@stats.ucl.ac.uk>
+Depends: R2jags,forestplot
+Description: Provides a collection of functions for conducting meta-analyses under Bayesian context in R. The package includes functions for computing various effect size or outcome measures (e.g. odds ratios, mean difference and incidence rate ratio) for different types of data based on MCMC simulations. Users are allowed to fit fixed- and random-effects models with different priors to the data. Meta-regression can be carried out if effects of additional covariates are observed. Furthermore, the package provides functions for creating posterior distribution plots and forest plot to display main model output. Traceplots and some other diagnostic plots are also available for assessing model fit and performance.
+License: GPL (>=2)
+URL: http://www.statistica.it/gianluca/bmeta,
+        http://www.statistica.it/gianluca
+NeedsCompilation: no
+Packaged: 2016-05-05 07:52:40 UTC; gianluca
+Built: R 3.3.0; ; 2016-05-05 07:54:40 UTC; unix

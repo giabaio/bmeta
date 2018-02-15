@@ -1,0 +1,38 @@
+\name{writeModel}
+\alias{writeModel}
+\title{
+A function to write a text file encoding the modelling assumptions
+}
+\description{
+The \code{writeModel} function helps to select the proper model to be contained in the 
+'model.file' for MCMC simulation based on users' specifications.  
+}
+\usage{
+writeModel(outcome, model, type, model.file, data)
+}
+\arguments{
+  \item{outcome}{
+type of outcome that needs to be specified. For binary, continuous and count data, 'bin',
+'ctns' and 'count' need to be specified, respectively.
+}
+  \item{model}{
+type of model that needs to be specified. There are 14 options: 'std.norm','std.dt',
+'reg.norm','reg.dt','std.ta','std.mv','reg.ta','reg.mv','std','std.unif','std.hc','reg',
+'reg.unif','reg.hc'.
+}
+  \item{type}{
+model type---either fixed-effects("fix") or random-effects model("ran") needs to be 
+specified.
+}
+  \item{model.file}{
+file containing the appropriate model selected by user 
+}
+  \item{data}{
+a data list containing information on observed data (including moderators).
+}
+}
+\author{
+Tao Ding
+Gianluca Baio
+}
+

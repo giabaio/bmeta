@@ -1,0 +1,127 @@
+\name{forest.plot}
+\alias{forest.plot}
+\title{
+Function to create forest plot
+}
+\description{
+A function to call package \code{forestplot} from R library and produce forest plot using 
+results from \code{bmeta}. The posterior estimate and credible interval for each study are 
+given by a square and a horizontal line, respectively. The summary estimate is drawn 
+as a diamond. 
+}
+\usage{
+forest.plot(x,title=NULL,xlab=NULL,log=FALSE,study.label=NULL,clip=c(-3,3),
+lines="black",box="blue",summary="orange",box.symb="box",label.cex=.8,
+xlab.cex=1,ticks.cex=.8,...)
+}
+\arguments{
+  \item{x}{
+a \code{bmeta} object with results of the model
+}
+  \item{title}{
+title of the plot 
+}
+  \item{xlab}{
+title of the x-axis label 
+}
+  \item{log}{
+estimates on natural scale is displayed by default. If TRUE, log scale is used (i.e. 
+log odds ratio, log incidence rate ratio). For continuous data, estimates are always 
+presented on natural scale and users do not need to specify this argument.  
+}
+  \item{study.label}{
+label for each study and the summary estimate. See details. 
+}
+  \item{clip}{
+lower and upper limits for clipping credible intervals to arrows  
+}
+  \item{lines}{
+selects the colour for the lines of the intervals. If the extra option \code{add.null}
+is set to \code{TRUE}, then \code{lines} should be specified as a two-element vector.
+If the user fails to do so, \code{bmeta} will overwrite this setting and select suitable
+values.
+}
+  \item{box}{
+selects the colour for mean study-specific estimates. If the extra option \code{add.null}
+is set to \code{TRUE}, then \code{box} should be specified as a two-element vector.
+If the user fails to do so, \code{bmeta} will overwrite this setting and select suitable
+values.
+}
+  \item{summary}{
+selects the colour for the pooled estimate
+}
+  \item{box.symb}{
+selects the symbol used to plot the mean. Options are "box" (default) or "circle"
+}
+  \item{label.cex}{
+defines the size of the text for the label. Defaults at .8 of normal size
+}
+  \item{xlab.cex}{
+defines the size of the text for the x-label. Defaults at 1 of the normal size
+}
+  \item{ticks.cex}{
+defines the size of the text for the x-axis ticks. Defaults at .8 of the normal size
+}
+  \item{...}{
+Additional arguments. Includes
+
+- \code{add.null} = TRUE/FALSE. If set to true, adds a plot of the null (no-pooling model)
+- \code{line.margin} = the distance between lines in case multiple graphs are shown on the same 
+plot
+- \code{box.size} = the size of the summary box
+- \code{new.page} = TRUE/FALSE. If set to true, then a new graph overwrite the existing one
+- \code{zero} (x-axis coordinate for zero line. If you provide a vector of length 2 it 
+will print a rectangle instead of just a line. Default at 0 or 1 depending on log scale)
+- \code{legend} = a legend for the multi-graph plot (including the null/no-pooling model)
+}
+}
+\author{
+Tao Ding
+Gianluca Baio
+}
+\examples{
+### Read and format the data (binary)
+data = read.csv(url("http://www.statistica.it/gianluca/bmeta/Data-bin.csv"))
+
+### List data for binary outcome 
+data.list <- list(y0=data$y0,y1=data$y1,n0=data$n0,n1=data$n1) 
+
+### Select fixed-effects meta-analysis with normal prior for binary data 
+x <- bmeta(data.list, outcome="bin", model="std.norm", type="fix")
+
+### Plot forest plot 
+forest.plot(x)
+
+### Plot forest plot on log scale 
+forest.plot(x,log=TRUE)
+
+### Select random-effects meta-analysis with t-distribution prior for binary
+### data
+x <- bmeta(data.list, outcome="bin", model="std.dt", type="ran")
+
+### Plot 'two-line' forest plot showing estimates from both randome-effects 
+### model and no-pooling effects model for comparison
+forest.plot(x,add.null=TRUE,title="Two-line forestplot for comparison")
+
+
+### Read and format the data (continuous)
+data = read.csv(url("http://www.statistica.it/gianluca/bmeta/Data-ctns.csv"))
+
+### List data for continuous outcome
+data.list <- list(y0=data$y0,y1=data$y1,se0=data$se0,se1=data$se1)  
+
+### Select fix-effects meta-analysis for studies reporting two arms separately
+x <- bmeta(data=data.list,outcome="ctns",model="std.ta",type="fix")
+
+### Define for individual studies
+study.label <- c(paste0(data$study,", ",data$year),"Summary estimate")
+
+### Produce forest plot with label for each study and control the lower and upper 
+### limits for clipping credible intervals to arrows   
+forest.plot(x,study.label=study.label,clip=c(-7,4))
+
+
+}
+% Add one or more standard keywords, see file 'KEYWORDS' in the
+% R documentation directory.
+\keyword{Forest plot}
