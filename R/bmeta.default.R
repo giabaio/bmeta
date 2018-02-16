@@ -282,22 +282,36 @@ bmeta.default<- function(data,outcome=c("bin","ctns","count"),model=c("std.norm"
   # 4. Defines the parameters vector
   
   if (outcome=="bin" & type=="fix"){
-    params <- c("rho","alpha","delta")
-  } 
+    if (model=="reg.norm" | model=="reg.dt"){
+      params <- c("rho","alpha","delta","beta0")
+    } else { params <- c("rho","alpha","delta")
+    } 
+  }
   
   if (outcome=="bin" & type=="ran"){
-    params <- c("rho","alpha","delta","tau","gamma","mu","sigma")
+    if (model=="reg.norm" | model=="reg.dt"){
+      params <- c("rho","alpha","delta","tau","gamma","mu","sigma","beta0")
+    } else { params <- c("rho","alpha","delta","tau","gamma","mu","sigma")
+    }
   }
   
-  if (outcome=="ctns" & type=="fix" & (model=="std.ta" | model=="reg.ta")){
-    params <- c("alpha0","alpha1","delta")
+  if (outcome=="ctns" & type=="fix"){
+    if (model=="std.ta") {
+      params <- c("alpha0","alpha1","delta") 
+    } else {
+      params <- c("alpha0","alpha1","delta","beta0")
+    }
   }
   
-  if (outcome=="ctns" & type=="ran" & (model=="std.ta" | model=="reg.ta")){
-    params <- c("alpha0","alpha1","delta","mu","tau","sigma")
+  if (outcome=="ctns" & type=="ran"){
+    if (model=="std.ta") {
+      params <- c("alpha0","alpha1","delta","mu","tau","sigma")
+    } else {
+      params <- c("alpha0","alpha1","delta","mu","tau","sigma","beta0")
+    }
   }
   
-  if (outcome=="ctns" & type=="fix" & model=="std.mv" ){
+  if (outcome=="ctns" & type=="fix" & model=="std.mv"){
     params <- c("mu")
   }
   
@@ -305,20 +319,28 @@ bmeta.default<- function(data,outcome=c("bin","ctns","count"),model=c("std.norm"
     params <- c("mu","delta","tau","sigma")
   }  
   
-  if (outcome=="ctns" & type=="fix" & model=="reg.mv" ){
-    params <- c("alpha")
+  if (outcome=="ctns" & type=="fix" & model=="reg.mv"){
+    params <- c("alpha","beta0")
   }    
   
   if (outcome=="ctns" & type=="ran" & model=="reg.mv"){
-    params <- c("alpha","tau","mu","sigma")
+    params <- c("alpha","tau","mu","sigma","beta0")
   }  
   
   if (outcome=="count" & type=="fix"){
-    params <- c("lambda0","lambda1","delta","IRR")
+    if (model=="reg"){
+      params <- c("lambda0","lambda1","delta","IRR","beta0")
+    } else{
+      params <- c("lambda0","lambda1","delta","IRR")
+    }
   }
   
   if (outcome=="count" & type=="ran"){
-    params <- c("lambda0","lambda1","mu","delta","tau","IRR","gamma","sigma")
+    if (model=="reg.unif" | model=="reg.hc"){
+      params <- c("lambda0","lambda1","mu","delta","tau","IRR","gamma","sigma","beta0")
+    } else {
+      params <- c("lambda0","lambda1","mu","delta","tau","IRR","gamma","sigma")
+    }
   }
   
   
@@ -537,3 +559,4 @@ bmeta.default<- function(data,outcome=c("bin","ctns","count"),model=c("std.norm"
   class(out) <- "bmeta"
   out
 }
+
