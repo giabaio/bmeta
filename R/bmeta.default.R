@@ -122,7 +122,7 @@
 #' @examples
 #' 
 #' ### Read and format the data (binary)
-#' data = read.csv(url("http://www.statistica.it/gianluca/bmeta/Data-bin.csv"))
+#' data = read.csv(url("https://gianluca.statistica.it/software/bmeta/Data-bin.csv"))
 #' 
 #' ### List data for binary outcome (for meta-analysis)
 #' data.list <- list(y0=data$y0,y1=data$y1,n0=data$n0,n1=data$n1) 
@@ -140,7 +140,7 @@
 #' 
 #' 
 #' ### Read and format the data (continuous)
-#' data = read.csv(url("http://www.statistica.it/gianluca/bmeta/Data-ctns.csv"))
+#' data = read.csv(url("https://gianluca.statistica.it/software/bmeta/Data-ctns.csv"))
 #' 
 #' ### List data for continuous outcome for studies reporting two arms separately
 #' ### (for meta-analysis)
@@ -161,7 +161,7 @@
 #' 
 #' 
 #' ### Read and format the data (count)
-#' data = read.csv(url("http://www.statistica.it/gianluca/bmeta/Data-count.csv"))
+#' data = read.csv(url("https://gianluca.statistica.it/software/bmeta/Data-count.csv"))
 #' 
 #' ### List data for count outcome (for meta-analysis)
 #' data.list <- list(y0=data$y0,y1=data$y1,p0=data$p0,p1=data$p1)

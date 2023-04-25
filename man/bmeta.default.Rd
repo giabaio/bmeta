@@ -4,11 +4,19 @@
 \alias{bmeta.default}
 \title{bmeta -- Bayesian Meta Analysis/Meta-regression}
 \usage{
-\method{bmeta}{default}(data, outcome = c("bin", "ctns", "count"),
-  model = c("std.norm", "std.dt", "reg.norm", "reg.dt", "std.ta", "std.mv",
-  "reg.ta", "reg.mv", "std", "std.unif", "std.hc", "reg", "reg.unif", "reg.hc"),
-  type = c("fix", "ran"), n.iter = 10000, n.burnin = 5000,
-  n.samples = 1000, n.chains = 2, model.file = "model.txt", ...)
+\method{bmeta}{default}(
+  data,
+  outcome = c("bin", "ctns", "count"),
+  model = c("std.norm", "std.dt", "reg.norm", "reg.dt", "std.ta", "std.mv", "reg.ta",
+    "reg.mv", "std", "std.unif", "std.hc", "reg", "reg.unif", "reg.hc"),
+  type = c("fix", "ran"),
+  n.iter = 10000,
+  n.burnin = 5000,
+  n.samples = 1000,
+  n.chains = 2,
+  model.file = "model.txt",
+  ...
+)
 }
 \arguments{
 \item{data}{a data list containing information on observed data (including
@@ -142,7 +150,7 @@ the specific model wanted for a certain type of data.
 \examples{
 
 ### Read and format the data (binary)
-data = read.csv(url("http://www.statistica.it/gianluca/bmeta/Data-bin.csv"))
+data = read.csv(url("https://gianluca.statistica.it/software/bmeta/Data-bin.csv"))
 
 ### List data for binary outcome (for meta-analysis)
 data.list <- list(y0=data$y0,y1=data$y1,n0=data$n0,n1=data$n1) 
@@ -160,7 +168,7 @@ bmeta(data.list, outcome="bin", model="reg.dt", type="ran")
 
 
 ### Read and format the data (continuous)
-data = read.csv(url("http://www.statistica.it/gianluca/bmeta/Data-ctns.csv"))
+data = read.csv(url("https://gianluca.statistica.it/software/bmeta/Data-ctns.csv"))
 
 ### List data for continuous outcome for studies reporting two arms separately
 ### (for meta-analysis)
@@ -181,7 +189,7 @@ bmeta(data.list, outcome="ctns", model="reg.mv", type="ran")
 
 
 ### Read and format the data (count)
-data = read.csv(url("http://www.statistica.it/gianluca/bmeta/Data-count.csv"))
+data = read.csv(url("https://gianluca.statistica.it/software/bmeta/Data-count.csv"))
 
 ### List data for count outcome (for meta-analysis)
 data.list <- list(y0=data$y0,y1=data$y1,p0=data$p0,p1=data$p1)

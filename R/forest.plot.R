@@ -48,7 +48,7 @@
 #' @examples
 #' 
 #' ### Read and format the data (binary)
-#' data = read.csv(url("http://www.statistica.it/gianluca/bmeta/Data-bin.csv"))
+#' data = read.csv(url("http://gianluca.statistica.it/software/bmeta/Data-bin.csv"))
 #' 
 #' ### List data for binary outcome 
 #' data.list <- list(y0=data$y0,y1=data$y1,n0=data$n0,n1=data$n1) 
@@ -72,7 +72,7 @@
 #' 
 #' 
 #' ### Read and format the data (continuous)
-#' data = read.csv(url("http://www.statistica.it/gianluca/bmeta/Data-ctns.csv"))
+#' data = read.csv(url("http://gianluca.statistica.it/software/bmeta/Data-ctns.csv"))
 #' 
 #' ### List data for continuous outcome
 #' data.list <- list(y0=data$y0,y1=data$y1,se0=data$se0,se1=data$se1)  
